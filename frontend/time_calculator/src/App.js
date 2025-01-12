@@ -137,8 +137,9 @@ function App() {
   const rowStyle = {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center', // 요소를 가로 방향으로 중앙 정렬
     marginBottom: '1rem',
-    marginLeft: '30%',
+    width: '100%', // 전체 너비를 사용하여 반응형
   };
 
   const labelStyle = {
