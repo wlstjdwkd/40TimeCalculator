@@ -223,6 +223,7 @@ function App() {
                 }}
                 value={item.startTime}
                 format="HH:mm:ss"
+                maxDetail="second"
                 disableClock
                 clearIcon={null}
               />
@@ -239,6 +240,7 @@ function App() {
                 }}
                 value={item.endTime}
                 format="HH:mm:ss"
+                maxDetail="second"
                 disableClock
                 clearIcon={null}
               />
