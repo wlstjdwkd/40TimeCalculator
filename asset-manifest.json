@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/40TimeCalculator/static/css/main.e6d169b8.css",
-    "main.js": "/40TimeCalculator/static/js/main.0a2d1ef0.js",
+    "main.css": "/40TimeCalculator/static/css/main.18cfd083.css",
+    "main.js": "/40TimeCalculator/static/js/main.85615718.js",
     "index.html": "/40TimeCalculator/index.html",
-    "main.e6d169b8.css.map": "/40TimeCalculator/static/css/main.e6d169b8.css.map",
-    "main.0a2d1ef0.js.map": "/40TimeCalculator/static/js/main.0a2d1ef0.js.map"
+    "main.18cfd083.css.map": "/40TimeCalculator/static/css/main.18cfd083.css.map",
+    "main.85615718.js.map": "/40TimeCalculator/static/js/main.85615718.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6d169b8.css",
-    "static/js/main.0a2d1ef0.js"
+    "static/css/main.18cfd083.css",
+    "static/js/main.85615718.js"
   ]
 }
