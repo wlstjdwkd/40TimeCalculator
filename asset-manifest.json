@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/40TimeCalculator/static/css/main.e6d169b8.css",
+    "main.js": "/40TimeCalculator/static/js/main.e91f9940.js",
+    "index.html": "/40TimeCalculator/index.html",
+    "main.e6d169b8.css.map": "/40TimeCalculator/static/css/main.e6d169b8.css.map",
+    "main.e91f9940.js.map": "/40TimeCalculator/static/js/main.e91f9940.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6d169b8.css",
+    "static/js/main.e91f9940.js"
+  ]
+}
