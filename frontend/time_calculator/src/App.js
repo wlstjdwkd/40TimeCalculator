@@ -136,8 +136,6 @@ function App() {
     if (!value) {
       updated[idx][field] = field === 'startTime' ? '09:00:00' : '15:00:00';
     } else {
-      // TimePicker는 'HH:mm' 또는 'HH:mm:ss' 형식을 반환할 수 있습니다.
-      // 항상 'HH:mm:ss' 형식으로 저장
       const timeParts = value.split(':');
       if (timeParts.length === 2) {
         updated[idx][field] = `${timeParts[0].padStart(2, '0')}:${timeParts[1].padStart(2, '0')}:00`;
@@ -148,7 +146,6 @@ function App() {
     setDaysData(updated);
   };
 
-  // 스타일: 살짝 왼쪽으로 당기기
   const containerStyle = {
     maxWidth: 600,
     margin: '2rem auto',
@@ -163,9 +160,9 @@ function App() {
   const rowStyle = {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center', // 요소를 가로 방향으로 중앙 정렬
+    justifyContent: 'center',
     marginBottom: '1rem',
-    width: '100%', // 전체 너비를 사용하여 반응형
+    width: '100%',
   };
 
   const labelStyle = {
