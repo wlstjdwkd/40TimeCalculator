@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import './App.css';
@@ -6,11 +6,11 @@ import './App.css';
 const STORAGE_KEY = 'worktime-calculator-data';
 
 const initialDaysData = [
-  { day: '월', startTime: '09:00:00', endTime: '15:00:00', totalTime: '' },
-  { day: '화', startTime: '09:00:00', endTime: '15:00:00', totalTime: '' },
-  { day: '수', startTime: '09:00:00', endTime: '15:00:00', totalTime: '' },
-  { day: '목', startTime: '09:00:00', endTime: '15:00:00', totalTime: '' },
-  { day: '금', startTime: '09:00:00', endTime: '15:00:00', totalTime: '' },
+  { day: '월', startTime: '09:00:00', endTime: '15:00:00' },
+  { day: '화', startTime: '09:00:00', endTime: '15:00:00' },
+  { day: '수', startTime: '09:00:00', endTime: '15:00:00' },
+  { day: '목', startTime: '09:00:00', endTime: '15:00:00' },
+  { day: '금', startTime: '09:00:00', endTime: '15:00:00' },
 ];
 
 function App() {
@@ -22,7 +22,6 @@ function App() {
   const [lunchBreakTime, setLunchBreakTime] = useState('01:00');
   const [daysData, setDaysData] = useState(initialDaysData);
 
-  const [totalWeekTime, setTotalWeekTime] = useState('');
   const [requiredResult, setRequiredResult] = useState('');
 
   // localStorage 로딩
@@ -77,21 +76,21 @@ function App() {
     return (hStr + mStr + sStr).trim() || '0초';
   };
 
-  const handleCalculate = () => {
+  // 근무 시간 계산
+  const { perDayTotalTime, totalWeekTime, totalSecondsOfWeek, coreTimeViolated } = useMemo(() => {
     const coreStartSec = parseTimeToSeconds(coreTimeStart);
     const coreEndSec = parseTimeToSeconds(coreTimeEnd);
     const lunchSec = parseTimeToSeconds(lunchBreakTime);
-    const requiredSec = parseTimeToSeconds(requiredWorkingTime);
 
-    let totalSecondsOfWeek = 0;
-    let coreTimeViolated = false;
+    let totalSeconds = 0;
+    let coreViolation = false;
 
-    const newDays = daysData.map((item) => {
+    const perDay = daysData.map((item) => {
       const startSec = parseTimeToSeconds(item.startTime);
       const endSec = parseTimeToSeconds(item.endTime);
 
       if (startSec > coreStartSec || endSec < coreEndSec) {
-        coreTimeViolated = true;
+        coreViolation = true;
       }
 
       let diffSec = endSec - startSec;
@@ -100,26 +99,53 @@ function App() {
       let workSec = diffSec - lunchSec;
       if (workSec < 0) workSec = 0;
 
-      totalSecondsOfWeek += workSec;
-      return { ...item, totalTime: convertSecondsToReadable(workSec) };
+      totalSeconds += workSec;
+      return workSec;
     });
 
-    setDaysData(newDays);
+    return {
+      perDayTotalTime: perDay.map(sec => convertSecondsToReadable(sec)),
+      totalWeekTime: convertSecondsToReadable(totalSeconds),
+      totalSecondsOfWeek: totalSeconds,
+      coreTimeViolated: coreViolation,
+    };
+  }, [coreTimeStart, coreTimeEnd, lunchBreakTime, daysData]);
+
+  // 필수 근무 시간 결과 계산
+  useEffect(() => {
+    const requiredSec = parseTimeToSeconds(requiredWorkingTime);
+    const totalSec = totalSecondsOfWeek;
 
     if (coreTimeViolated) {
-      setTotalWeekTime('코어타임을 만족하지 못했음음');
-      setRequiredResult('');
+      setRequiredResult('코어타임을 만족하지 못했습니다.');
       return;
     }
 
-    setTotalWeekTime(convertSecondsToReadable(totalSecondsOfWeek));
-
-    const diff = requiredSec - totalSecondsOfWeek;
+    const diff = requiredSec - totalSec;
     if (diff > 0) {
       setRequiredResult(`부족: ${convertSecondsToReadable(diff)}`);
     } else {
       setRequiredResult('충족했습니다!');
     }
+  }, [requiredWorkingTime, totalSecondsOfWeek, coreTimeViolated]);
+
+  // 시간 변경 시 요일별 근무시간 업데이트
+  const handleDayTimeChange = (idx, field, value) => {
+    const updated = [...daysData];
+    // TimePicker가 선택한 값이 없을 경우 기본값 설정
+    if (!value) {
+      updated[idx][field] = field === 'startTime' ? '09:00:00' : '15:00:00';
+    } else {
+      // TimePicker는 'HH:mm' 또는 'HH:mm:ss' 형식을 반환할 수 있습니다.
+      // 항상 'HH:mm:ss' 형식으로 저장
+      const timeParts = value.split(':');
+      if (timeParts.length === 2) {
+        updated[idx][field] = `${timeParts[0].padStart(2, '0')}:${timeParts[1].padStart(2, '0')}:00`;
+      } else {
+        updated[idx][field] = value;
+      }
+    }
+    setDaysData(updated);
   };
 
   // 스타일: 살짝 왼쪽으로 당기기
@@ -149,9 +175,10 @@ function App() {
     marginRight: 8,
   };
 
+
   return (
     <div style={containerStyle}>
-      <h1>주간 근무시간 계산기!</h1>
+      <h1>주간 근무시간 계산기</h1>
 
       {/* 필수 주간 근무 */}
       <div style={rowStyle}>
@@ -161,13 +188,14 @@ function App() {
             onChange={setRequiredWorkingTime}
             value={requiredWorkingTime}
             format="HH:mm"
-            disableClock
             clearIcon={null}
+            maxDetail="minute"
+            disableClock
           />
         </div>
       </div>
 
-      {/* 코어타임 시작/종료 */}
+      {/* 코어타임 시작 */}
       <div style={rowStyle}>
         <label style={labelStyle}>코어타임 시작</label>
         <div className="timePickerBig">
@@ -175,11 +203,14 @@ function App() {
             onChange={setCoreTimeStart}
             value={coreTimeStart}
             format="HH:mm"
-            disableClock
             clearIcon={null}
+            maxDetail="minute"
+            disableClock
           />
         </div>
       </div>
+
+      {/* 코어타임 종료 */}
       <div style={rowStyle}>
         <label style={labelStyle}>코어타임 종료</label>
         <div className="timePickerBig">
@@ -187,8 +218,9 @@ function App() {
             onChange={setCoreTimeEnd}
             value={coreTimeEnd}
             format="HH:mm"
-            disableClock
             clearIcon={null}
+            maxDetail="minute"
+            disableClock
           />
         </div>
       </div>
@@ -201,8 +233,9 @@ function App() {
             onChange={setLunchBreakTime}
             value={lunchBreakTime}
             format="HH:mm"
-            disableClock
             clearIcon={null}
+            maxDetail="minute"
+            disableClock
           />
         </div>
       </div>
@@ -211,22 +244,18 @@ function App() {
 
       {/* 월~금 (시:분:초) */}
       {daysData.map((item, idx) => (
-        <div key={item.day} style={{ marginBottom: '1rem' }}>
+        <div key={item.day} style={{ marginBottom: '1rem', width: '100%' }}>
           <strong>{item.day}요일</strong>
           <div style={{ ...rowStyle, marginBottom: '0.5rem' }}>
             <label style={labelStyle}>출근</label>
             <div className="timePickerBig">
               <TimePicker
-                onChange={(val) => {
-                  const updated = [...daysData];
-                  updated[idx].startTime = val || '';
-                  setDaysData(updated);
-                }}
-                value={item.startTime}
+                onChange={(val) => handleDayTimeChange(idx, 'startTime', val)}
+                value={item.startTime.slice(0,5)}
                 format="HH:mm:ss"
+                clearIcon={null}
                 maxDetail="second"
                 disableClock
-                clearIcon={null}
               />
             </div>
           </div>
@@ -234,22 +263,18 @@ function App() {
             <label style={labelStyle}>퇴근</label>
             <div className="timePickerBig">
               <TimePicker
-                onChange={(val) => {
-                  const updated = [...daysData];
-                  updated[idx].endTime = val || '';
-                  setDaysData(updated);
-                }}
-                value={item.endTime}
+                onChange={(val) => handleDayTimeChange(idx, 'endTime', val)}
+                value={item.endTime.slice(0,5)}
                 format="HH:mm:ss"
+                clearIcon={null}
                 maxDetail="second"
                 disableClock
-                clearIcon={null}
               />
             </div>
           </div>
           <div style={{ ...rowStyle, marginBottom: '0.5rem' }}>
             <label style={labelStyle}>근무시간</label>
-            <span>{item.totalTime || '-'}</span>
+            <span>{perDayTotalTime[idx] || '-'}</span>
           </div>
           <hr
             style={{
@@ -262,27 +287,10 @@ function App() {
         </div>
       ))}
 
-      <button
-        onClick={handleCalculate}
-        style={{
-          width: '100%',
-          padding: '0.75rem',
-          fontWeight: 'bold',
-          cursor: 'pointer',
-          borderRadius: '4px',
-          border: 'none',
-          backgroundColor: '#4caf50',
-          color: '#fff',
-          fontSize: '1rem',
-        }}
-      >
-        근무시간 계산
-      </button>
-
       {/* 결과 영역 */}
       {totalWeekTime && (
         <div style={{ marginTop: '1rem', fontWeight: 'bold' }}>
-          {totalWeekTime}
+          총 근무시간: {totalWeekTime}
         </div>
       )}
       {requiredResult && (
