@@ -2,8 +2,17 @@ import React, { useState, useEffect, useMemo } from 'react';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import './App.css';
+import DaySection from './DaySection';
 
 const STORAGE_KEY = 'worktime-calculator-data';
+
+const dayImages = {
+  '월': '/images/mon.png',
+  '화': '/images/tue.png',
+  '수': '/images/wed.png',
+  '목': '/images/thu.png',
+  '금': '/images/fri.png',
+};
 
 const initialDaysData = [
   { day: '월', startTime: '09:00:00', endTime: '15:00:00' },
@@ -241,48 +250,19 @@ function App() {
 
       {/* 월~금 (시:분:초) */}
       {daysData.map((item, idx) => (
-        <div key={item.day} style={{ marginBottom: '1rem', width: '100%' }}>
-          <strong>{item.day}요일</strong>
-          <div style={{ ...rowStyle, marginBottom: '0.5rem' }}>
-            <label style={labelStyle}>출근</label>
-            <div className="timePickerBig">
-              <TimePicker
-                onChange={(val) => handleDayTimeChange(idx, 'startTime', val)}
-                value={item.startTime.slice(0,5)}
-                format="HH:mm:ss"
-                clearIcon={null}
-                maxDetail="second"
-                disableClock
-              />
-            </div>
-          </div>
-          <div style={{ ...rowStyle, marginBottom: '0.5rem' }}>
-            <label style={labelStyle}>퇴근</label>
-            <div className="timePickerBig">
-              <TimePicker
-                onChange={(val) => handleDayTimeChange(idx, 'endTime', val)}
-                value={item.endTime.slice(0,5)}
-                format="HH:mm:ss"
-                clearIcon={null}
-                maxDetail="second"
-                disableClock
-              />
-            </div>
-          </div>
-          <div style={{ ...rowStyle, marginBottom: '0.5rem' }}>
-            <label style={labelStyle}>근무시간</label>
-            <span>{perDayTotalTime[idx] || '-'}</span>
-          </div>
-          <hr
-            style={{
-              border: 'none',
-              borderTop: '1px dotted #ccc',
-              width: '80%',
-              margin: '0.5rem auto',
-            }}
-          />
-        </div>
+        <DaySection 
+          key={item.day}
+          imageSrc={dayImages[item.day]}
+          startTime={item.startTime}
+          endTime={item.endTime}
+          totalTime={perDayTotalTime[idx]}
+          onStartChange={(val) => handleDayTimeChange(idx, 'startTime', val)}
+          onEndChange={(val) => handleDayTimeChange(idx, 'endTime', val)}
+        />
       ))}
+
+      <hr />
+
 
       {/* 결과 영역 */}
       {totalWeekTime && (
