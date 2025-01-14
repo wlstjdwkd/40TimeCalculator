@@ -24,7 +24,7 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
                         value={startTime}
                         format="HH:mm:ss"
                         clearIcon={null}
-                        maxDetail="minute"
+                        maxDetail="second"
                         disableClock
                     />
                     </div>
@@ -39,7 +39,7 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
                         value={endTime}
                         format="HH:mm:ss"
                         clearIcon={null}
-                        maxDetail="minute"
+                        maxDetail="second"
                         disableClock
                     />
                     </div>
@@ -51,7 +51,7 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
                     <span style={{ fontSize: '1rem' }}>{totalTime || '-'}</span>
                 </div>
         
-                <hr style={{ border: 'none', borderTop: '1px dotted #ccc', width: '100%', margin: '0.5rem auto' }} />
+                <hr style={{ border: 'none', borderTop: '1px dotted #ccc', width: '85%', margin: '0.5rem 0.5rem auto' }} />
             </div>
       </div>
     );
