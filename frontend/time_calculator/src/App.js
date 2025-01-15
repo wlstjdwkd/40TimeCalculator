@@ -233,7 +233,7 @@ function App() {
 
       {/* 점심시간 */}
       <div style={rowStyle}>
-        <label style={labelStyle}>점심시간</label>
+        <label style={labelStyle}>점심 먹는 시간</label>
         <div className="timePickerBig">
           <TimePicker
             onChange={setLunchBreakTime}
