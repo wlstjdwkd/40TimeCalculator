@@ -9,9 +9,9 @@ function Footer() {
       <div className="footer-content">
         <p>© {new Date().getFullYear()} 근무시간 계산기 </p>
         <div className="footer-links">
-          <a href="mailto:jsbang@suresofttech.com">
+          <p>
             jsbang@suresofttech.com
-          </a>
+          </p>
         </div>
       </div>
     </footer>
