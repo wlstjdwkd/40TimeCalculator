@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
+import 'react-clock/dist/Clock.css';
 import './App.css';
-import DaySection from './DaySection';
+import DaySection from './components/DaySection/DaySection';
+import Footer from './components/Footer/Footer';
 
 const STORAGE_KEY = 'worktime-calculator-data';
 
@@ -281,6 +283,9 @@ function App() {
           {requiredResult}
         </div>
       )}
+
+      {/* 푸터 */}
+      <Footer />
     </div>
   );
 }

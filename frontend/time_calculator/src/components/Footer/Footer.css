@@ -1,0 +1,41 @@
+/* src/components/Footer/Footer.css */
+
+.footer {
+    background-color: #f8f8f8;
+    padding: 1rem 0;
+    border-top: 1px solid #e7e7e7;
+    width: 100%;
+  }
+  
+  .footer-content {
+    margin: 0 auto;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #555;
+  }
+  
+  .footer-links {
+    margin-top: 0.5rem;
+  }
+  
+  .footer-links a {
+    margin: 0 0.5rem;
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .footer-links a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 600px) {
+    .footer-content {
+      padding: 0 1rem;
+    }
+  
+    .footer-links a {
+      display: block;
+      margin: 0.25rem 0;
+    }
+  }
+  
