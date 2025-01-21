@@ -1,0 +1,36 @@
+/* src/components/SummaryBox/SummaryBox.css */
+
+.summary-box {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background-color: #f9f9f9;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .summary-label {
+    font-weight: bold;
+  }
+  
+  .summary-time {
+    /* 시간을 강조하고 싶다면 여기에 스타일 추가 가능 */
+  }
+  
+  .fulfilled {
+    color: green;
+    font-weight: bold;
+  }
+  
+  .remaining {
+    color: red;
+    font-weight: bold;
+  }
+  

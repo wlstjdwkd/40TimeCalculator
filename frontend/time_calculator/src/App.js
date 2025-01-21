@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import './App.css';
 import DaySection from './components/DaySection/DaySection';
+import SummaryBox from './components/SummaryBox/SummaryBox';
 import Footer from './components/Footer/Footer';
-import { toZonedTime, fromZonedTime } from 'date-fns-tz';
-import { format, startOfWeek, addWeeks, differenceInMilliseconds } from 'date-fns';
+// import { toZonedTime, fromZonedTime } from 'date-fns-tz';
+// import { format, startOfWeek, addWeeks, differenceInMilliseconds } from 'date-fns';
 
-const TIMEZONE = 'Asia/Seoul';
+// const TIMEZONE = 'Asia/Seoul';
 const STORAGE_KEY = 'worktime-calculator-data';
 
 const dayImages = {
@@ -38,68 +39,68 @@ function App() {
 
   const [requiredResult, setRequiredResult] = useState('');
 
-  // 주간 데이터 초기화 함수
-  const resetWeeklyData = useCallback(() => {
-    // 상태 초기화
-    setDaysData(initialDaysData);
+  // // 주간 데이터 초기화 함수
+  // const resetWeeklyData = useCallback(() => {
+  //   // 상태 초기화
+  //   setDaysData(initialDaysData);
 
-    // 로컬 스토리지에 데이터 업데이트
-    const dataToSave = {
-      requiredWorkingTime,
-      coreTimeStart,
-      coreTimeEnd,
-      lunchBreakTime,
-      daysData: initialDaysData,
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
+  //   // 로컬 스토리지에 데이터 업데이트
+  //   const dataToSave = {
+  //     requiredWorkingTime,
+  //     coreTimeStart,
+  //     coreTimeEnd,
+  //     lunchBreakTime,
+  //     daysData: initialDaysData,
+  //   };
+  //   localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
 
-    // 초기화 메시지 설정
-    alert('월요일이 되었으므로 시간이 초기화되었습니다.');
-  }, [requiredWorkingTime, coreTimeStart, coreTimeEnd, lunchBreakTime]);
+  //   // 초기화 메시지 설정
+  //   alert('월요일이 되었으므로 시간이 초기화되었습니다.');
+  // }, [requiredWorkingTime, coreTimeStart, coreTimeEnd, lunchBreakTime]);
 
-  // 초기화 로직 및 타이머 설정
-  useEffect(() => {
-    try {
-      const now = new Date();
+  // // 초기화 로직 및 타이머 설정
+  // useEffect(() => {
+  //   try {
+  //     const now = new Date();
 
-      // 현재 시간을 KST로 변환
-      const zonedNow = toZonedTime(now, TIMEZONE);
+  //     // 현재 시간을 KST로 변환
+  //     const zonedNow = toZonedTime(now, TIMEZONE);
 
-      // 이번 주 월요일 시작 (0시)
-      const currentWeekStart = startOfWeek(zonedNow, { weekStartsOn: 1 });
-      const formattedStartOfWeek = format(currentWeekStart, 'yyyy-MM-dd');
+  //     // 이번 주 월요일 시작 (0시)
+  //     const currentWeekStart = startOfWeek(zonedNow, { weekStartsOn: 1 });
+  //     const formattedStartOfWeek = format(currentWeekStart, 'yyyy-MM-dd');
 
-      const lastReset = localStorage.getItem('lastReset');
+  //     const lastReset = localStorage.getItem('lastReset');
 
-      // 로컬 스토리지 초기화 확인
-      if (lastReset !== formattedStartOfWeek) {
-        resetWeeklyData();
-        localStorage.setItem('lastReset', formattedStartOfWeek);
-      }
+  //     // 로컬 스토리지 초기화 확인
+  //     if (lastReset !== formattedStartOfWeek) {
+  //       resetWeeklyData();
+  //       localStorage.setItem('lastReset', formattedStartOfWeek);
+  //     }
 
-      // 다음 주 월요일 0시까지 남은 시간 계산
-      const nextWeekStart = addWeeks(currentWeekStart, 1);
-      const nextMondayStartZoned = toZonedTime(nextWeekStart, TIMEZONE);
-      nextMondayStartZoned.setHours(0, 0, 0, 0);
+  //     // 다음 주 월요일 0시까지 남은 시간 계산
+  //     const nextWeekStart = addWeeks(currentWeekStart, 1);
+  //     const nextMondayStartZoned = toZonedTime(nextWeekStart, TIMEZONE);
+  //     nextMondayStartZoned.setHours(0, 0, 0, 0);
 
-      const nextMondayUtc = fromZonedTime(nextMondayStartZoned, TIMEZONE);
-      const nowUtc = fromZonedTime(zonedNow, TIMEZONE);
-      const timeUntilNextMonday = differenceInMilliseconds(nextMondayUtc, nowUtc);
+  //     const nextMondayUtc = fromZonedTime(nextMondayStartZoned, TIMEZONE);
+  //     const nowUtc = fromZonedTime(zonedNow, TIMEZONE);
+  //     const timeUntilNextMonday = differenceInMilliseconds(nextMondayUtc, nowUtc);
 
-      // 타이머 설정
-      const timer = setTimeout(() => {
-        resetWeeklyData();
-        const newStartOfWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
-        const newFormattedStartOfWeek = format(newStartOfWeek, 'yyyy-MM-dd');
-        localStorage.setItem('lastReset', newFormattedStartOfWeek);
-      }, timeUntilNextMonday);
+  //     // 타이머 설정
+  //     const timer = setTimeout(() => {
+  //       resetWeeklyData();
+  //       const newStartOfWeek = startOfWeek(new Date(), { weekStartsOn: 1 });
+  //       const newFormattedStartOfWeek = format(newStartOfWeek, 'yyyy-MM-dd');
+  //       localStorage.setItem('lastReset', newFormattedStartOfWeek);
+  //     }, timeUntilNextMonday);
 
-      // 타이머 정리
-      return () => clearTimeout(timer);
-    } catch (error) {
-      console.error('초기화 로직 오류:', error);
-    }
-  }, []);
+  //     // 타이머 정리
+  //     return () => clearTimeout(timer);
+  //   } catch (error) {
+  //     console.error('초기화 로직 오류:', error);
+  //   }
+  // }, []);
 
   // localStorage 로딩
   useEffect(() => {
@@ -202,7 +203,7 @@ function App() {
 
     const diff = requiredSec - totalSec;
     if (diff > 0) {
-      setRequiredResult(`부족: ${convertSecondsToReadable(diff)}`);
+      setRequiredResult(`${convertSecondsToReadable(diff)}`);
     } else {
       setRequiredResult('충족했습니다!');
     }
@@ -254,7 +255,28 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1>주간 근무시간 계산기</h1>
+      <h1>근무시간 계산기</h1>
+
+      {/* 결과 영역 */}
+      {/* {totalWeekTime && (
+        <div style={{ marginTop: '1rem', fontWeight: 'bold' }}>
+          총 근무시간: {totalWeekTime}
+        </div>
+      )}
+      {requiredResult && (
+        <div
+          style={{
+            marginTop: '1rem',
+            fontWeight: 'bold',
+            color: requiredResult.startsWith('부족') ? 'red' : 'green',
+          }}
+        >
+          {requiredResult}
+        </div>
+      )} */}
+
+      <SummaryBox totalWeekTime={totalWeekTime} requiredResult={requiredResult} />
+
 
       {/* 필수 주간 근무 */}
       <div style={rowStyle}>
@@ -334,23 +356,7 @@ function App() {
       <hr />
 
 
-      {/* 결과 영역 */}
-      {totalWeekTime && (
-        <div style={{ marginTop: '1rem', fontWeight: 'bold' }}>
-          총 근무시간: {totalWeekTime}
-        </div>
-      )}
-      {requiredResult && (
-        <div
-          style={{
-            marginTop: '1rem',
-            fontWeight: 'bold',
-            color: requiredResult.startsWith('부족') ? 'red' : 'green',
-          }}
-        >
-          {requiredResult}
-        </div>
-      )}
+      
 
       {/* 푸터 */}
       <Footer />
