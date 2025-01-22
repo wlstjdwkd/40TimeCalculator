@@ -20,9 +20,8 @@
     font-weight: bold;
   }
   
-  .summary-time {
-    /* 시간을 강조하고 싶다면 여기에 스타일 추가 가능 */
-  }
+  /* .summary-time {
+  } */
   
   .fulfilled {
     color: green;

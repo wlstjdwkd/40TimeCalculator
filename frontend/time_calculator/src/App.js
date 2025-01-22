@@ -5,6 +5,7 @@ import 'react-clock/dist/Clock.css';
 import './App.css';
 import DaySection from './components/DaySection/DaySection';
 import SummaryBox from './components/SummaryBox/SummaryBox';
+import WorkSettings from './components/WorkSettings/WorkSettings';
 import Footer from './components/Footer/Footer';
 // import { toZonedTime, fromZonedTime } from 'date-fns-tz';
 // import { format, startOfWeek, addWeeks, differenceInMilliseconds } from 'date-fns';
@@ -252,93 +253,17 @@ function App() {
     marginRight: 8,
   };
 
+  const textStyle = {
+    textAlign: 'left',
+  }
+
 
   return (
     <div style={containerStyle}>
       <h1>근무시간 계산기</h1>
 
       {/* 결과 영역 */}
-      {/* {totalWeekTime && (
-        <div style={{ marginTop: '1rem', fontWeight: 'bold' }}>
-          총 근무시간: {totalWeekTime}
-        </div>
-      )}
-      {requiredResult && (
-        <div
-          style={{
-            marginTop: '1rem',
-            fontWeight: 'bold',
-            color: requiredResult.startsWith('부족') ? 'red' : 'green',
-          }}
-        >
-          {requiredResult}
-        </div>
-      )} */}
-
       <SummaryBox totalWeekTime={totalWeekTime} requiredResult={requiredResult} />
-
-
-      {/* 필수 주간 근무 */}
-      <div style={rowStyle}>
-        <label style={labelStyle}>필수 주간 근무</label>
-        <div className="timePickerBig">
-          <TimePicker
-            onChange={setRequiredWorkingTime}
-            value={requiredWorkingTime}
-            format="HH:mm"
-            clearIcon={null}
-            maxDetail="minute"
-            disableClock
-          />
-        </div>
-      </div>
-
-      {/* 코어타임 시작 */}
-      <div style={rowStyle}>
-        <label style={labelStyle}>코어타임 시작</label>
-        <div className="timePickerBig">
-          <TimePicker
-            onChange={setCoreTimeStart}
-            value={coreTimeStart}
-            format="HH:mm"
-            clearIcon={null}
-            maxDetail="minute"
-            disableClock
-          />
-        </div>
-      </div>
-
-      {/* 코어타임 종료 */}
-      <div style={rowStyle}>
-        <label style={labelStyle}>코어타임 종료</label>
-        <div className="timePickerBig">
-          <TimePicker
-            onChange={setCoreTimeEnd}
-            value={coreTimeEnd}
-            format="HH:mm"
-            clearIcon={null}
-            maxDetail="minute"
-            disableClock
-          />
-        </div>
-      </div>
-
-      {/* 점심시간 */}
-      <div style={rowStyle}>
-        <label style={labelStyle}>점심 먹는 시간</label>
-        <div className="timePickerBig">
-          <TimePicker
-            onChange={setLunchBreakTime}
-            value={lunchBreakTime}
-            format="HH:mm"
-            clearIcon={null}
-            maxDetail="minute"
-            disableClock
-          />
-        </div>
-      </div>
-
-      <hr />
 
       {/* 월~금 (시:분:초) */}
       {daysData.map((item, idx) => (
@@ -355,6 +280,18 @@ function App() {
 
       <hr />
 
+      {/* WorkSettings 컴포넌트 */}
+      <p style={textStyle}>시간 설정</p>
+      <WorkSettings
+        requiredWorkingTime={requiredWorkingTime}
+        setRequiredWorkingTime={setRequiredWorkingTime}
+        coreTimeStart={coreTimeStart}
+        setCoreTimeStart={setCoreTimeStart}
+        coreTimeEnd={coreTimeEnd}
+        setCoreTimeEnd={setCoreTimeEnd}
+        lunchBreakTime={lunchBreakTime}
+        setLunchBreakTime={setLunchBreakTime}
+      />
 
       
 

@@ -1,0 +1,54 @@
+/* src/components/DaySection/DaySection.css */
+
+.day-section {
+    display: flex;
+    align-items: flex-start; /* 이미지와 메인 섹션을 상단에 정렬 */
+    margin-bottom: 1rem;
+}
+  
+.day-section img {
+    width: 50px;
+    height: 50px;
+    margin-right: 1rem;
+}
+  
+.day-section-main {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+  
+.day-section-timepickers {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+}
+  
+.time-picker {
+    width: 30%;
+    
+  }
+.tilde {
+    font-size: 1.2rem;
+    margin: 0 1rem;
+    color: #555;
+}
+  
+.time-picker .react-time-picker__wrapper {
+    /* padding: 10%;        */
+    border: 2% solid #ccc; 
+    border-radius: 6px;   
+    display: flex;       
+    align-items: center;
+}
+    
+  
+.day-section-total {
+    margin-top: 0.5rem;
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.9rem;
+    color: #333;
+}
+  
