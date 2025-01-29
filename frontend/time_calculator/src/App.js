@@ -148,15 +148,17 @@ function App() {
   };
 
   const convertSecondsToReadable = (sec) => {
-    const h = Math.floor(sec / 3600);
-    const remainder = sec % 3600;
-    const m = Math.floor(remainder / 60);
-    const s = remainder % 60;
+		const h = Math.floor(sec / 3600);
+		const remainder = sec % 3600;
+		const m = Math.floor(remainder / 60);
+		const s = remainder % 60;
 
-    const hStr = h > 0 ? `${h}시간 ` : '';
-    const mStr = m > 0 ? `${m}분 ` : '';
-    const sStr = s > 0 ? `${s}초` : '';
-    return (hStr + mStr + sStr).trim() || '0초';
+		// 항상 두 자리로 포맷
+		const hStr = String(h).padStart(2, "0") + "시간 ";
+		const mStr = String(m).padStart(2, "0") + "분 ";
+		const sStr = String(s).padStart(2, "0") + "초";
+
+		return hStr + mStr + sStr;
   };
 
   // 근무 시간 계산
