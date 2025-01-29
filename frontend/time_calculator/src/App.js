@@ -40,6 +40,10 @@ function App() {
 
   const [requiredResult, setRequiredResult] = useState('');
 
+  /* 시간 설정 팝업*/
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+	const togglePopup = () => setIsPopupOpen((prev) => !prev);
+
   // // 주간 데이터 초기화 함수
   // const resetWeeklyData = useCallback(() => {
   //   // 상태 초기화
@@ -237,27 +241,6 @@ function App() {
     textAlign: 'center',
   };
 
-
-  const rowStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: '1rem',
-    width: '100%',
-  };
-
-  const labelStyle = {
-    width: 120,
-    fontWeight: 'bold',
-    textAlign: 'left',   
-    marginRight: 8,
-  };
-
-  const textStyle = {
-    textAlign: 'left',
-  }
-
-
   return (
     <div style={containerStyle}>
       <h1 className="title">
@@ -281,20 +264,27 @@ function App() {
       ))}
 
 
-      {/* WorkSettings 컴포넌트 */}
-      <p style={textStyle}>시간 설정</p>
-      <WorkSettings
-        requiredWorkingTime={requiredWorkingTime}
-        setRequiredWorkingTime={setRequiredWorkingTime}
-        coreTimeStart={coreTimeStart}
-        setCoreTimeStart={setCoreTimeStart}
-        coreTimeEnd={coreTimeEnd}
-        setCoreTimeEnd={setCoreTimeEnd}
-        lunchBreakTime={lunchBreakTime}
-        setLunchBreakTime={setLunchBreakTime}
-      />
+      <button
+				onClick={togglePopup}
+				className="settingBtn"
+			>
+				설정
+			</button>
 
-      
+      {/* WorkSettings 컴포넌트 */}
+			{isPopupOpen && (
+          <WorkSettings
+          requiredWorkingTime={requiredWorkingTime}
+          setRequiredWorkingTime={setRequiredWorkingTime}
+          coreTimeStart={coreTimeStart}
+          setCoreTimeStart={setCoreTimeStart}
+          coreTimeEnd={coreTimeEnd}
+          setCoreTimeEnd={setCoreTimeEnd}
+          lunchBreakTime={lunchBreakTime}
+          setLunchBreakTime={setLunchBreakTime}
+          togglePopup={togglePopup}
+        />)
+      }
 
       {/* 푸터 */}
       <Footer />
