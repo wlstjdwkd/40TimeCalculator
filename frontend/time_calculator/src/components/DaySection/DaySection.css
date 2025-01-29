@@ -28,42 +28,14 @@
     gap: 0.825rem; 
     justify-content: space-evenly; /* justify-evenly */
 }
-  
-.time-picker {
-    width: 30%;
 
-  }
 .tilde {
     font-size: 1.2rem;
     /* margin: 0 0.5rem; */
     padding-left: 1rem;
     font-weight: 600; /* font-semibold */
     color: #4b5563; /* text-gray-600 */
-}
-  
-.time-picker .react-time-picker__wrapper {
-	border: 1px solid #e2e8f0; /* 연한 회색 테두리 */
-	border-radius: 6px;
-	padding: 0.5rem;
-	background-color: #f9fafb; /* 연한 배경 */
-	display: flex;
-	align-items: center;
-	transition: border-color 0.2s ease-in-out;
-}
-    
-.time-picker .react-time-picker__wrapper:hover {
-    border-color: #3b82f6; /* hover 시 파란색 테두리 */
-}
-
-.time-picker .react-time-picker__inputGroup__input {
-	color: #1f2937; /* 텍스트 색상 */
-	font-weight: 500;
-}
-
-.time-picker .react-time-picker__inputGroup__divider {
-	color: #9ca3af; /* 구분자 색상 */
-}
-  
+  }  
 .day-section-total {
     font-size: 1rem; /* text-sm (small) */
     font-weight: 600; /* font-semibold */
