@@ -260,7 +260,9 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1>근무시간 계산기</h1>
+      <h1 className="title">
+        <span className="gradientText">근무시간 계산기</span>
+      </h1>
 
       {/* 결과 영역 */}
       <SummaryBox totalWeekTime={totalWeekTime} requiredResult={requiredResult} />

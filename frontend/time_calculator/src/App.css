@@ -10,3 +10,28 @@
   display: flex;       
   align-items: center;
 }
+
+
+/* 타이틀 */
+.title {
+  font-size: 2.25rem; 
+  font-weight: 800; 
+  color: #1a202c; 
+  text-align: center; 
+  margin: 1.5rem 0; 
+  position: relative; 
+}
+
+/* 다크 모드에서 텍스트 색상 변경 */
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: #ffffff; 
+  }
+}
+
+/* 그라디언트 텍스트 효과 */
+.gradientText {
+  background: linear-gradient(to right, #42BFDD, #3b82f6, #002879);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
