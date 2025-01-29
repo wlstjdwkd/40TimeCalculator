@@ -1,54 +1,73 @@
 /* src/components/DaySection/DaySection.css */
 
 .day-section {
-    display: flex;
-    align-items: flex-start; /* 이미지와 메인 섹션을 상단에 정렬 */
-    margin-bottom: 1rem;
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    justify-content: space-evenly; /* justify-evenly */
+    padding: 1rem 0.5rem; /*py-4: 1rem (16px), px-2: 0.5rem (8px)*/
+    border-bottom: 1px solid #e5e7eb; /* border-b: 1px solid border-gray-200 */
+    border-collapse: collapse; /* border-collapse */
 }
   
 .day-section img {
-    width: 50px;
-    height: 50px;
-    margin-right: 1rem;
+    width: 3rem; /* w-12: 3rem = 48px */
+    height: 3rem; /* h-12: 3rem = 48px */
+    border-radius: 50%; /* rounded-full */
 }
   
 .day-section-main {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
 }
   
 .day-section-timepickers {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content:center;
+    display: flex; /* flex */
+    align-items: center; /* items-center */
+    gap: 0.825rem; 
+    justify-content: space-evenly; /* justify-evenly */
 }
   
 .time-picker {
     width: 30%;
-    
+
   }
 .tilde {
     font-size: 1.2rem;
-    margin: 0 1rem;
-    color: #555;
+    /* margin: 0 0.5rem; */
+    padding-left: 1rem;
+    font-weight: 600; /* font-semibold */
+    color: #4b5563; /* text-gray-600 */
 }
   
 .time-picker .react-time-picker__wrapper {
-    /* padding: 10%;        */
-    border: 2% solid #ccc; 
-    border-radius: 6px;   
-    display: flex;       
-    align-items: center;
+	border: 1px solid #e2e8f0; /* 연한 회색 테두리 */
+	border-radius: 6px;
+	padding: 0.5rem;
+	background-color: #f9fafb; /* 연한 배경 */
+	display: flex;
+	align-items: center;
+	transition: border-color 0.2s ease-in-out;
 }
     
+.time-picker .react-time-picker__wrapper:hover {
+    border-color: #3b82f6; /* hover 시 파란색 테두리 */
+}
+
+.time-picker .react-time-picker__inputGroup__input {
+	color: #1f2937; /* 텍스트 색상 */
+	font-weight: 500;
+}
+
+.time-picker .react-time-picker__inputGroup__divider {
+	color: #9ca3af; /* 구분자 색상 */
+}
   
 .day-section-total {
-    margin-top: 0.5rem;
-    text-align: center;
-    font-weight: bold;
-    font-size: 0.9rem;
-    color: #333;
+    font-size: 1rem; /* text-sm (small) */
+    font-weight: 600; /* font-semibold */
+    text-align: center; /* text-center */
+    color: #2d3748; /* text-gray-800 */
 }
   
