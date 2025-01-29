@@ -266,6 +266,7 @@ function App() {
 
       {/* 결과 영역 */}
       <SummaryBox totalWeekTime={totalWeekTime} requiredResult={requiredResult} />
+			<hr />
 
       {/* 월~금 (시:분:초) */}
       {daysData.map((item, idx) => (
