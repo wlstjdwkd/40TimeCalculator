@@ -1,35 +1,50 @@
 /* src/components/SummaryBox/SummaryBox.css */
-
 .summary-box {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    background-color: #f9f9f9;
-  }
+	display: flex;
+	flex-direction: column;
+	padding: 1.5rem; /* 넉넉한 내부 여백 */
+	background-color: #ffffff; /* 흰색 배경 */
+	text-align: center;
+	border-bottom: 1px solid #e5e7eb; /* border-b: 1px solid border-gray-200 */
+    border-collapse: collapse; /* border-collapse */
+}
+
+.summary-row {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-bottom: 1rem; /* 아래 간격 추가 */
+	font-size: 1rem; /* 기본 텍스트 크기 */
+	color: #374151; /* 중간 회색 텍스트 */
+}
   
-  .summary-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-  }
+.summary-label {
+	font-weight: 600; /* 굵게 */
+	color: #1f2937; /* 진한 회색 */
+}
   
-  .summary-label {
-    font-weight: bold;
-  }
-  
-  /* .summary-time {
-  } */
-  
-  .fulfilled {
-    color: green;
-    font-weight: bold;
-  }
-  
-  .remaining {
-    color: red;
-    font-weight: bold;
-  }
+.summary-time {
+	font-size: 1.125rem; /* 약간 큰 텍스트 */
+	font-weight: 700; /* 더 굵게 */
+	color: #4b5563; /* 기본 텍스트 색상 */
+	background: rgba(75, 85, 99, 0.05); /* 기본 배경 강조 */
+	padding: 0.2rem 0.4rem; /* 텍스트 여백 */
+	border-radius: 4px; /* 약간 둥글게 */
+}
+
+.summary-time.fulfilled {
+	color: #10b981; /* 녹색 */
+	font-weight: 700; /* 더 굵게 */
+	background: rgba(16, 185, 129, 0.1); /* 배경 강조 */
+	padding: 0.2rem 0.4rem; /* 텍스트 여백 */
+	border-radius: 4px; /* 약간 둥글게 */
+}
+
+.summary-time.remaining {
+	color: #ef4444; /* 빨간색 */
+	font-weight: 700; /* 더 굵게 */
+	background: rgba(239, 68, 68, 0.1); /* 배경 강조 */
+	padding: 0.2rem 0.4rem; /* 텍스트 여백 */
+	border-radius: 4px; /* 약간 둥글게 */
+}
   
