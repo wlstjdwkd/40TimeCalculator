@@ -29,6 +29,8 @@ const initialDaysData = [
   { day: '금', startTime: '09:00:00', endTime: '15:00:00' },
 ];
 
+const backgroundImage = "/images/background.png";
+
 function App() {
   const [loaded, setLoaded] = useState(false);
 
@@ -245,13 +247,16 @@ function App() {
 
   return (
     <div style={containerStyle}>
-      <h1 className="title">
-        <img src ='/images/logo.png' width={50}></img>
-        <span className="gradientText">근무시간 계산기</span>
-      </h1>
+      <div className="background" style={{backgroundImage: 'url('+backgroundImage+')'}}>
+        <h1 className="title">
+          <img src ='/images/logo.png' width="100rem"></img>
+          {/* <span className="gradientText">근무시간 계산기</span> */}
+        </h1>
 
+      </div>
       {/* 결과 영역 */}
       <SummaryBox totalWeekTime={totalWeekTime} requiredResult={requiredResult} />
+
 
       {/* 월~금 (시:분:초) */}
       {daysData.map((item, idx) => (
