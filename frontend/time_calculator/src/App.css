@@ -20,6 +20,8 @@
   text-align: center; 
   margin: 1.5rem 0; 
   position: relative; 
+  display: flex;
+  justify-content: center;
 }
 
 /* 다크 모드에서 텍스트 색상 변경 */
@@ -31,7 +33,7 @@
 
 /* 그라디언트 텍스트 효과 */
 .gradientText {
-  background: linear-gradient(to right, #42BFDD, #3b82f6, #002879);
+  background: linear-gradient(to top, #F2B28C, #D2665A, #B82132);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

@@ -246,6 +246,7 @@ function App() {
   return (
     <div style={containerStyle}>
       <h1 className="title">
+        <img src ='/images/logo.png' width={50}></img>
         <span className="gradientText">근무시간 계산기</span>
       </h1>
 
