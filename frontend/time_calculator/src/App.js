@@ -235,6 +235,11 @@ function App() {
     setDaysData(updated);
   };
 
+  //초기화 핸들러 함수
+  const handleReset = () => {
+    setDaysData(initialDaysData);
+  };
+
   const containerStyle = {
     maxWidth: 600,
     margin: '2rem auto',
@@ -278,6 +283,9 @@ function App() {
 			>
 				설정
 			</button>
+      <button onClick={handleReset} className="resetBtn">
+        초기화
+      </button>
 
       {/* WorkSettings 컴포넌트 */}
 			{isPopupOpen && (
