@@ -1,14 +1,22 @@
-// src/components/DaySection/DaySection.js
-
 import React from 'react';
 import TimePicker from 'react-time-picker';
-import './DaySection.css'; // 스타일을 별도의 CSS 파일로 관리
+import './DaySection.css';
 
-function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, onEndChange }) {
+const TODAY_IMAGE = '/images/today.png';
+
+
+function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, onEndChange, isToday }) {
   return (
-    <div className="day-section">
+    <div className={`day-section ${isToday ? 'today' : ''}`}>
       {/* 요일 이미지 */}
-      <img src={imageSrc} alt="day" />
+      {/* <img src={imageSrc} alt="day" /> */}
+      <div className="image-container">
+        {isToday && (
+          <img src={TODAY_IMAGE} alt="today" className="today-overlay" />
+        )}
+        <img src={imageSrc} alt="day" className="day-image" />
+
+      </div>
 
       {/* 출근, 퇴근, 근무시간 */}
       <div className="day-section-main">

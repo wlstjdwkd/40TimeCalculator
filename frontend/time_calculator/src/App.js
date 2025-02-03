@@ -109,6 +109,8 @@ function App() {
   //   }
   // }, []);
 
+
+
   // localStorage 로딩
   useEffect(() => {
     const saved = localStorage.getItem(STORAGE_KEY);
@@ -250,12 +252,18 @@ function App() {
     textAlign: 'center',
   };
 
+  // 오늘 요일 구하기 (월~금)
+  const todayIndex = new Date().getDay(); 
+  // 월~금에 해당하는 값: 1~5
+  const todayLabel = (todayIndex >= 1 && todayIndex <= 5) 
+    ? ['월', '화', '수', '목', '금'][todayIndex - 1]
+    : null;
+
   return (
     <div style={containerStyle}>
       <div className="background" style={{backgroundImage: 'url('+backgroundImage+')'}}>
         <h1 className="title">
           <img src ='/images/logo.png' width="100rem"></img>
-          {/* <span className="gradientText">근무시간 계산기</span> */}
         </h1>
 
       </div>
@@ -273,6 +281,7 @@ function App() {
           totalTime={perDayTotalTime[idx]}
           onStartChange={(val) => handleDayTimeChange(idx, 'startTime', val)}
           onEndChange={(val) => handleDayTimeChange(idx, 'endTime', val)}
+          isToday={item.day === todayLabel}  // 현재 요일이면 true 전달
         />
       ))}
 
