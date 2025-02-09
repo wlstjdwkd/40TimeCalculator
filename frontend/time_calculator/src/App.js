@@ -109,7 +109,21 @@ function App() {
   //   }
   // }, []);
 
+  //화면 새로 들어갈 때마다 새로고침하는 로직
+  useEffect(() => {
+    // visibilitychange 이벤트 핸들러 정의
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        window.location.reload();
+      }
+    };
 
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, []);
 
   // localStorage 로딩
   useEffect(() => {
