@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
 import './App.css';
@@ -37,6 +36,9 @@ function App() {
   const [lunchBreakTime, setLunchBreakTime] = useState('01:00');
   const [daysData, setDaysData] = useState(initialDaysData);
 
+  //고정 출근 시간 state
+  const [fixedStartTime, setFixedStartTime] = useState('09:00');
+
   const [requiredResult, setRequiredResult] = useState('');
 
   /* 시간 설정 팝업*/
@@ -71,6 +73,7 @@ function App() {
         if (parsed.coreTimeEnd) setCoreTimeEnd(parsed.coreTimeEnd);
         if (parsed.lunchBreakTime) setLunchBreakTime(parsed.lunchBreakTime);
         if (parsed.daysData) setDaysData(parsed.daysData);
+        if (parsed.fixedStartTime) setFixedStartTime(parsed.fixedStartTime);
       } catch (e) {
         console.warn('localStorage parse error:', e);
       }
@@ -87,9 +90,10 @@ function App() {
       coreTimeEnd,
       lunchBreakTime,
       daysData,
+      fixedStartTime,
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(dataToSave));
-  }, [loaded, requiredWorkingTime, coreTimeStart, coreTimeEnd, lunchBreakTime, daysData]);
+  }, [loaded, requiredWorkingTime, coreTimeStart, coreTimeEnd, lunchBreakTime, daysData, fixedStartTime]);
 
   const parseTimeToSeconds = (timeStr) => {
     if (!timeStr) return 0;
@@ -186,9 +190,27 @@ function App() {
     setDaysData(updated);
   };
 
+  // 고정 출근 시간 변경 시, 월~금의 출근 시간을 변경하는 핸들러
+  const handleFixedStartTimeChange = (value) => {
+    // 고정 출근 시간을 업데이트
+    setFixedStartTime(value);
+
+    // 월~금에 해당하는 daysData의 출근 시간 모두 변경
+    const updated = daysData.map(item => ({
+      ...item,
+      startTime: `${value}:00`,
+    }));
+    setDaysData(updated);
+  };
+
   //초기화 핸들러 함수
   const handleReset = () => {
-    setDaysData(initialDaysData);
+    const resetData = initialDaysData.map(item => ({
+      ...item,
+      startTime: `${fixedStartTime}:00`
+    }));
+    
+    setDaysData(resetData);
   };
 
   const containerStyle = {
@@ -256,6 +278,8 @@ function App() {
           setCoreTimeEnd={setCoreTimeEnd}
           lunchBreakTime={lunchBreakTime}
           setLunchBreakTime={setLunchBreakTime}
+          fixedStartTime={fixedStartTime}
+          onFixedStartTimeChange={handleFixedStartTimeChange}
           togglePopup={togglePopup}
         />)
       }

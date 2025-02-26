@@ -1,5 +1,3 @@
-// src/components/WorkSettings/WorkSettings.js
-
 import React from 'react';
 import TimePicker from 'react-time-picker';
 import './WorkSettings.css'; 
@@ -13,6 +11,8 @@ function WorkSettings({
   setCoreTimeEnd,
   lunchBreakTime,
   setLunchBreakTime,
+  fixedStartTime,
+  onFixedStartTimeChange,
   togglePopup
 }) {
   return (
@@ -87,6 +87,24 @@ function WorkSettings({
             </div>
 
             
+          </div>
+
+          {/* 고정 출근 시간 (추가된 부분) */}
+          <div className="work-settings-row">
+            <label htmlFor="fixedStartTime" className="work-settings-label">
+              고정 출근 시간
+            </label>
+            <div className="time-picker">
+              <TimePicker
+                id="fixedStartTime"
+                onChange={onFixedStartTimeChange}
+                value={fixedStartTime}
+                format="HH:mm"
+                clearIcon={null}
+                maxDetail="minute"
+                disableClock
+              />
+            </div>
           </div>
         </div>
 
