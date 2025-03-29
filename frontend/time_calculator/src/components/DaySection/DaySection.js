@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Modal, Radio, Button } from 'antd';
 import TimePicker from 'react-time-picker';
 import './DaySection.css';
 
@@ -6,10 +7,44 @@ const TODAY_IMAGE = '/images/today.png';
 
 
 function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, onEndChange, isToday }) {
+
+  const [isLeaveModalVisible, setIsLeaveModalVisible] = useState(false);
+  const [selectedLeaveOption, setSelectedLeaveOption] = useState(null);
+
+  const showLeaveModal = () => {
+    setIsLeaveModalVisible(true);
+  };
+
+  const handleLeaveOk = () => {
+    if (selectedLeaveOption === 'full') {
+      onStartChange('08:00:00');
+      onEndChange('17:00:00');
+    } else if (selectedLeaveOption === 'morning') {
+      onStartChange('08:00:00');
+    } else if (selectedLeaveOption === 'afternoon') {
+      onEndChange('17:00:00');
+    }
+    
+    setIsLeaveModalVisible(false);
+    setSelectedLeaveOption(null);
+  };
+
+  const handleLeaveCancel = () => {
+    setIsLeaveModalVisible(false);
+  };
+
   return (
     <div className={`day-section ${isToday ? 'today' : ''}`}>
+      <div className="left-controls">
+        {/* 연차 버튼 */}
+        <img 
+          src="/images/holiday.png" 
+          alt="연차" 
+          id="leave-icon"
+          onClick={showLeaveModal}
+        />
+      </div>
       {/* 요일 이미지 */}
-      {/* <img src={imageSrc} alt="day" /> */}
       <div className="image-container">
         {isToday && (
           <img src={TODAY_IMAGE} alt="today" className="today-overlay" />
@@ -57,6 +92,20 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
           {totalTime}
         </div>
       </div>
+      <Modal
+        title="연차 선택"
+        visible={isLeaveModalVisible}
+        onOk={handleLeaveOk}
+        onCancel={handleLeaveCancel}
+        okText="확인"
+        cancelText="취소"
+      >
+        <Radio.Group onChange={(e) => setSelectedLeaveOption(e.target.value)} value={selectedLeaveOption}>
+          <Radio value="full">하루 연차</Radio>
+          <Radio value="morning">오전 반차</Radio>
+          <Radio value="afternoon">오후 반차</Radio>
+        </Radio.Group>
+      </Modal>
     </div>
   );
 }

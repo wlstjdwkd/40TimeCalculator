@@ -252,7 +252,7 @@ function App() {
           totalTime={perDayTotalTime[idx]}
           onStartChange={(val) => handleDayTimeChange(idx, 'startTime', val)}
           onEndChange={(val) => handleDayTimeChange(idx, 'endTime', val)}
-          isToday={item.day === todayLabel}  // 현재 요일이면 true 전달
+          isToday={item.day === todayLabel}
         />
       ))}
 
