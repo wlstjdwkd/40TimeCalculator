@@ -17,12 +17,12 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
 
   const handleLeaveOk = () => {
     if (selectedLeaveOption === 'full') {
-      onStartChange('08:00:00');
-      onEndChange('17:00:00');
+      onStartChange('08:00');
+      onEndChange('17:00');
     } else if (selectedLeaveOption === 'morning') {
-      onStartChange('08:00:00');
+      onStartChange('08:00');
     } else if (selectedLeaveOption === 'afternoon') {
-      onEndChange('17:00:00');
+      onEndChange('17:00');
     }
     
     setIsLeaveModalVisible(false);
@@ -61,9 +61,9 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
             <TimePicker
               onChange={onStartChange}
               value={startTime}
-              format="HH:mm:ss"
+              format="HH:mm"
               clearIcon={null}
-              maxDetail="second"
+              maxDetail="minute"
               disableClock
               aria-label="출근 시간"
             />            
@@ -78,9 +78,9 @@ function DaySection({ imageSrc, startTime, endTime, totalTime, onStartChange, on
             <TimePicker
               onChange={onEndChange}
               value={endTime}
-              format="HH:mm:ss"
+              format="HH:mm"
               clearIcon={null}
-              maxDetail="second"
+              maxDetail="minute"
               disableClock
               aria-label="퇴근 시간"
             />

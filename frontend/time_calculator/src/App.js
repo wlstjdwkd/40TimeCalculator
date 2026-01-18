@@ -18,14 +18,14 @@ const dayImages = {
 };
 
 const initialDaysData = [
-  { day: '월', startTime: '09:00:00', endTime: '15:00:00' },
-  { day: '화', startTime: '09:00:00', endTime: '15:00:00' },
-  { day: '수', startTime: '09:00:00', endTime: '15:00:00' },
-  { day: '목', startTime: '09:00:00', endTime: '15:00:00' },
-  { day: '금', startTime: '09:00:00', endTime: '15:00:00' },
+  { day: '월', startTime: '09:00', endTime: '15:00' },
+  { day: '화', startTime: '09:00', endTime: '15:00' },
+  { day: '수', startTime: '09:00', endTime: '15:00' },
+  { day: '목', startTime: '09:00', endTime: '15:00' },
+  { day: '금', startTime: '09:00', endTime: '15:00' },
 ];
 
-const backgroundImage = "/images/background.png";
+const backgroundImage = "/images/timeisgold.png";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -100,22 +100,20 @@ function App() {
     const parts = timeStr.split(':').map(Number);
     const hh = parts[0] || 0;
     const mm = parts[1] || 0;
-    const ss = parts[2] || 0;
-    return hh * 3600 + mm * 60 + ss;
+
+    return hh * 3600 + mm * 60;
   };
 
   const convertSecondsToReadable = (sec) => {
 		const h = Math.floor(sec / 3600);
 		const remainder = sec % 3600;
 		const m = Math.floor(remainder / 60);
-		const s = remainder % 60;
 
 		// 항상 두 자리로 포맷
 		const hStr = String(h).padStart(2, "0") + "시간 ";
 		const mStr = String(m).padStart(2, "0") + "분 ";
-		const sStr = String(s).padStart(2, "0") + "초";
 
-		return hStr + mStr + sStr;
+		return hStr + mStr;
   };
 
   // 근무 시간 계산
@@ -138,7 +136,7 @@ function App() {
       let diffSec = endSec - startSec;
       if (diffSec < 0) diffSec = 0;
 
-      let workSec = diffSec - lunchSec - 1;
+      let workSec = diffSec - lunchSec;
       if (workSec < 0) workSec = 0;
 
       totalSeconds += workSec;
